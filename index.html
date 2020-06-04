@@ -60,13 +60,11 @@ $.getJSON("/filelist").done(function(data) {
       return '<a href="' + x["item"] + '"><li>' + x["item"] + '</li></a>'
     });
 
-    console.log(result)
-
     $('.status').html("Found " + result.length + " files")
     $('.results').html(elements.join(''))
   }, 500));
 
-  $('.status').html("Ready to rock")
+  $('.status').html("Indexed " + data.length + " files. Start typing to search.");
 });
 
 // http://davidwalsh.name/javascript-debounce-function
