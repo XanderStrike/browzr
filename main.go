@@ -10,6 +10,8 @@ import (
 
 func main() {
 	http.HandleFunc("/filelist", files)
+	http.HandleFunc("/styles.css", styles)
+	http.HandleFunc("/script.js", script)
 	http.HandleFunc("/", index)
 
 	fs := http.FileServer(http.Dir("./files"))
@@ -28,6 +30,16 @@ func files(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+}
+
+func styles(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/css")
+	http.ServeFile(w, r, "styles.css")
+}
+
+func script(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/javascript")
+	http.ServeFile(w, r, "script.js")
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
