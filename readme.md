@@ -10,7 +10,8 @@ through annoying menus.
 If you're the kind of person who prefers Search over Navigation, then this might
 be the file browser for you.
 
-<img width="1194" alt="image" src="https://github.com/user-attachments/assets/e354d524-1152-495f-8d62-b0493784b919" />
+<img width="1185" alt="image" src="https://github.com/user-attachments/assets/a81e421a-3094-472b-a4b4-1cf6c78bcfc1" />
+
 
 ## Installation
 
