@@ -2,11 +2,17 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 )
+
+type FileInfo struct {
+	Path string `json:"path"`
+	Size string `json:"size"`
+}
 
 func main() {
 	http.HandleFunc("/filelist", files)
@@ -47,7 +53,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 }
 
 func fileJSON() []byte {
-	files := []string{}
+	files := []FileInfo{}
 	err := filepath.Walk("files/",
 		func(path string, info os.FileInfo, err error) error {
 			if err != nil {
@@ -56,7 +62,10 @@ func fileJSON() []byte {
 			if info.IsDir() {
 				return nil
 			}
-			files = append(files, path)
+			files = append(files, FileInfo{
+				Path: path,
+				Size: humanizeBytes(info.Size()),
+			})
 			return nil
 		})
 	if err != nil {
@@ -68,4 +77,17 @@ func fileJSON() []byte {
 		log.Println(err)
 	}
 	return filesJson
+}
+
+func humanizeBytes(bytes int64) string {
+	const unit = 1024
+	if bytes < unit {
+		return fmt.Sprintf("%dB", bytes)
+	}
+	div, exp := int64(unit), 0
+	for n := bytes / unit; n >= unit; n /= unit {
+		div *= unit
+		exp++
+	}
+	return fmt.Sprintf("%.1f%cB", float64(bytes)/float64(div), "KMGTPE"[exp])
 }

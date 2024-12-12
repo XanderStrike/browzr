@@ -1,10 +1,12 @@
 fetch("/filelist")
   .then(response => response.json())
   .then(data => {
+    // console.log(data)
     const options = {
       includeScore: true,
       isCaseSensitive: true,
       shouldSort: true,
+      keys: ['path']
     }
 
     const fuse = new Fuse(data, options)
@@ -22,8 +24,16 @@ fetch("/filelist")
     function performSearch(query) {
       const result = fuse.search(query.toLowerCase()).reverse()
       const elements = result.slice(0, 200).map(x => {
-        const filename = x.item
-        return `<a href="${filename}"><li>${getFileIcon(filename)}${filename}</li></a>`
+        const file = x.item
+        return `<a href="${file.path}">
+          <li>
+            ${getFileIcon(file.path)}
+            <span class="file-details">
+              <span class="filename">${file.path}</span>
+              <span class="filesize">${file.size}</span>
+            </span>
+          </li>
+        </a>`
       })
 
       statusEl.textContent = `Found ${result.length} files`

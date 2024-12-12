@@ -59,4 +59,22 @@ li:hover {
   color: #666;
   width: 24px;
   text-align: center;
+}
+
+.file-details {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.filename {
+  flex: 1;
+}
+
+.filesize {
+  font-size: 0.8em;
+  color: #666;
+  white-space: nowrap;
 } 
