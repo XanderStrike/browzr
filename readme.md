@@ -10,6 +10,8 @@ through annoying menus.
 If you're the kind of person who prefers Search over Navigation, then this might
 be the file browser for you.
 
+<img width="1194" alt="image" src="https://github.com/user-attachments/assets/e354d524-1152-495f-8d62-b0493784b919" />
+
 ## Installation
 
 Run this with docker:
@@ -26,7 +28,7 @@ docker run -v $(pwd):/app/files:ro -u $(id -u ${USER}):$(id -g ${USER}) -p 3000:
 
 ## Performance
 
-I currently use it for browsing a 25,000 file archive, and my experience is
+I currently use it for browsing a 120,000 file ROM archive, and my experience is
 great. The page is loaded and ready to search in a second or two, and results
 similarly come up in a second or two. This is good enough for my uses.
 
