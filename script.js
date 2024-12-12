@@ -10,10 +10,10 @@ fetch("/filelist")
       distance: 100,
       minMatchCharLength: 2,
       keys: [{
-        name: 'filename',
+        name: 'f',
         weight: 2.0
       }, {
-        name: 'dir',
+        name: 'd',
         weight: 1.0
       }],
       findAllMatches: true,
@@ -36,14 +36,14 @@ fetch("/filelist")
       const result = fuse.search(query.toLowerCase())
       const elements = result.slice(0, 200).map(x => {
         const file = x.item
-        return `<a href="${file.path}">
+        return `<a href="${file.p}">
           <li>
-            ${getFileIcon(file.filename)}
+            ${getFileIcon(file.f)}
             <span class="file-details">
               <span class="filename">
-                <span class="filepath">${file.dir}</span>${file.filename}
+                <span class="filepath">${file.d}</span>${file.f}
               </span>
-              <span class="filesize">${file.size}</span>
+              <span class="filesize">${file.s}</span>
             </span>
           </li>
         </a>`

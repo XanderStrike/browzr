@@ -1,6 +1,7 @@
 package main
 
 import (
+	"compress/gzip"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -10,10 +11,10 @@ import (
 )
 
 type FileInfo struct {
-	Path     string `json:"path"`     // Full path for the href
-	Dir      string `json:"dir"`      // Directory part
-	Filename string `json:"filename"` // Just the filename
-	Size     string `json:"size"`     // File size
+	P string `json:"p"` // path
+	D string `json:"d"` // dir
+	F string `json:"f"` // filename
+	S string `json:"s"` // size
 }
 
 func main() {
@@ -34,7 +35,12 @@ func main() {
 
 func files(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	_, err := w.Write(fileJSON())
+	w.Header().Set("Content-Encoding", "gzip")
+
+	gz := gzip.NewWriter(w)
+	defer gz.Close()
+
+	_, err := gz.Write(fileJSON())
 	if err != nil {
 		log.Println(err)
 	}
@@ -66,10 +72,10 @@ func fileJSON() []byte {
 			}
 			dir, file := filepath.Split(path)
 			files = append(files, FileInfo{
-				Path:     path,
-				Dir:      dir,
-				Filename: file,
-				Size:     humanizeBytes(info.Size()),
+				P: path,
+				D: dir,
+				F: file,
+				S: humanizeBytes(info.Size()),
 			})
 			return nil
 		})
