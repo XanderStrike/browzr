@@ -25,11 +25,17 @@ fetch("/filelist")
       const result = fuse.search(query.toLowerCase()).reverse()
       const elements = result.slice(0, 200).map(x => {
         const file = x.item
+        const pathParts = file.path.split('/')
+        const filename = pathParts.pop()
+        const path = pathParts.length ? pathParts.join('/') + '/' : ''
+        
         return `<a href="${file.path}">
           <li>
             ${getFileIcon(file.path)}
             <span class="file-details">
-              <span class="filename">${file.path}</span>
+              <span class="filename">
+                <span class="filepath">${path}</span>${filename}
+              </span>
               <span class="filesize">${file.size}</span>
             </span>
           </li>

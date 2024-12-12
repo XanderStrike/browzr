@@ -71,10 +71,17 @@ li:hover {
 
 .filename {
   flex: 1;
+  color: #000;
+  font-weight: 500;
 }
 
 .filesize {
   font-size: 0.8em;
   color: #666;
   white-space: nowrap;
+}
+
+.filepath {
+  color: #666;
+  font-weight: normal;
 } 
