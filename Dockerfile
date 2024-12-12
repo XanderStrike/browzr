@@ -1,17 +1,16 @@
-FROM golang:1.14.4-alpine3.12 as builder
-WORKDIR $GOPATH/src/github.com/xanderstrike/browzr/
-RUN apk add --no-cache git
+FROM golang as builder
+WORKDIR /app
 COPY . .
-RUN mkdir /out
-RUN mkdir /out/keystore
-RUN GO111MODULE=on CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /out/browzr
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o browzr
 
 FROM scratch
-LABEL maintainer="xanderstrike@gmail.com"
 WORKDIR /app
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
-COPY --from=builder /out .
+COPY --from=builder /app/browzr .
 COPY index.html .
+COPY styles.css .
+COPY script.js .
+
 VOLUME /app/files/
-EXPOSE 8000
+EXPOSE 3000
 ENTRYPOINT ["/app/browzr"]

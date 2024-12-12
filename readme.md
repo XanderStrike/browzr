@@ -15,13 +15,13 @@ be the file browser for you.
 Run this with docker:
 
 ```
-docker run -v <path>:/app/files -p 3000:3000 xanderstrike/browzr
+docker run -v <path>:/app/files:ro -u $(id -u ${USER}):$(id -g ${USER}) -p 3000:3000 xanderstrike/browzr
 ```
 
 A nice copy-pastable command run it against the current dir:
 
 ```
-docker run -v $(pwd):/app/files -p 3000:3000 xanderstrike/browzr
+docker run -v $(pwd):/app/files:ro -u $(id -u ${USER}):$(id -g ${USER}) -p 3000:3000 xanderstrike/browzr
 ```
 
 ## Performance
