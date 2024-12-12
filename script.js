@@ -4,9 +4,20 @@ fetch("/filelist")
     // console.log(data)
     const options = {
       includeScore: true,
-      isCaseSensitive: true,
       shouldSort: true,
-      keys: ['path']
+      threshold: 0.4,
+      location: 0,
+      distance: 100,
+      minMatchCharLength: 2,
+      keys: [{
+        name: 'filename',
+        weight: 2.0
+      }, {
+        name: 'dir',
+        weight: 1.0
+      }],
+      findAllMatches: true,
+      ignoreLocation: true
     }
 
     const fuse = new Fuse(data, options)
@@ -22,19 +33,15 @@ fetch("/filelist")
     }
 
     function performSearch(query) {
-      const result = fuse.search(query.toLowerCase()).reverse()
+      const result = fuse.search(query.toLowerCase())
       const elements = result.slice(0, 200).map(x => {
         const file = x.item
-        const pathParts = file.path.split('/')
-        const filename = pathParts.pop()
-        const path = pathParts.length ? pathParts.join('/') + '/' : ''
-        
         return `<a href="${file.path}">
           <li>
-            ${getFileIcon(file.path)}
+            ${getFileIcon(file.filename)}
             <span class="file-details">
               <span class="filename">
-                <span class="filepath">${path}</span>${filename}
+                <span class="filepath">${file.dir}</span>${file.filename}
               </span>
               <span class="filesize">${file.size}</span>
             </span>

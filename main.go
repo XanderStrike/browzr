@@ -10,8 +10,10 @@ import (
 )
 
 type FileInfo struct {
-	Path string `json:"path"`
-	Size string `json:"size"`
+	Path     string `json:"path"`     // Full path for the href
+	Dir      string `json:"dir"`      // Directory part
+	Filename string `json:"filename"` // Just the filename
+	Size     string `json:"size"`     // File size
 }
 
 func main() {
@@ -62,9 +64,12 @@ func fileJSON() []byte {
 			if info.IsDir() {
 				return nil
 			}
+			dir, file := filepath.Split(path)
 			files = append(files, FileInfo{
-				Path: path,
-				Size: humanizeBytes(info.Size()),
+				Path:     path,
+				Dir:      dir,
+				Filename: file,
+				Size:     humanizeBytes(info.Size()),
 			})
 			return nil
 		})
