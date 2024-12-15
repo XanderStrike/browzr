@@ -25,17 +25,15 @@ fetch("/filelist")
     const statusEl = document.querySelector('.status')
     const resultsEl = document.querySelector('.results')
 
-    // Restore search from URL hash on page load
-    const initialSearch = decodeURIComponent(window.location.hash.slice(1))
-    if (initialSearch) {
-      searchInput.value = initialSearch
-      performSearch(initialSearch)
+    // Function to get random items from array
+    function getRandomItems(arr, count) {
+      const shuffled = [...arr].sort(() => 0.5 - Math.random())
+      return shuffled.slice(0, count)
     }
 
-    function performSearch(query) {
-      const result = fuse.search(query.toLowerCase())
-      const elements = result.slice(0, 200).map(x => {
-        const file = x.item
+    // Function to render files
+    function renderFiles(files) {
+      return files.map(file => {
         return `<a href="${file.p}">
           <li>
             ${getFileIcon(file.f)}
@@ -47,10 +45,27 @@ fetch("/filelist")
             </span>
           </li>
         </a>`
-      })
+      }).join('')
+    }
 
+    // Restore search from URL hash on page load
+    const initialSearch = decodeURIComponent(window.location.hash.slice(1))
+    if (initialSearch) {
+      searchInput.value = initialSearch
+      performSearch(initialSearch)
+    }
+
+    function performSearch(query) {
+      if (!query) {
+        // Show random files when search is empty
+        const randomFiles = getRandomItems(data, 50)
+        resultsEl.innerHTML = renderFiles(randomFiles)
+        return
+      }
+
+      const result = fuse.search(query.toLowerCase())
+      resultsEl.innerHTML = renderFiles(result.slice(0, 200).map(x => x.item))
       statusEl.textContent = `Found ${result.length} files`
-      resultsEl.innerHTML = elements.join('')
     }
 
     searchInput.addEventListener('input', debounce(() => {
@@ -68,6 +83,7 @@ fetch("/filelist")
     })
 
     statusEl.textContent = `Indexed ${data.length} files. Start typing to search.`
+    performSearch('')
   })
   .catch(error => {
     document.querySelector('.status').textContent = `Error loading files: ${error.message}`
