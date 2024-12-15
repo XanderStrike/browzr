@@ -10,6 +10,8 @@ through annoying menus.
 If you're the kind of person who prefers Search over Navigation, then this might
 be the file browser for you.
 
+[Live Demo](https://browzr.astandke.com)
+
 <img width="1185" alt="image" src="https://github.com/user-attachments/assets/a81e421a-3094-472b-a4b4-1cf6c78bcfc1" />
 
 
