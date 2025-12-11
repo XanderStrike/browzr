@@ -1,8 +1,35 @@
+:root {
+  --bg-color: #FFFFFF;
+  --text-color: #333333;
+  --text-secondary: #666666;
+  --border-color: #DDDDDD;
+  --hover-bg: #E0E0E0;
+  --item-bg: #EEEEEE;
+  --search-border: #DDDDDD;
+  --search-focus-border: #999999;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #121212;
+    --text-color: #E0E0E0;
+    --text-secondary: #AAAAAA;
+    --border-color: #444444;
+    --hover-bg: #2A2A2A;
+    --item-bg: #1E1E1E;
+    --search-border: #444444;
+    --search-focus-border: #777777;
+  }
+}
+
 body {
   margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .container {
@@ -19,12 +46,14 @@ body {
   padding: 10px;
   box-sizing: border-box;
   border-radius: 8px;
-  border: 2px solid #DDD;
+  border: 2px solid var(--search-border);
   outline: none;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 .search:focus {
-  border-color: #999;
+  border-color: var(--search-focus-border);
 }
 
 ul {
@@ -36,27 +65,28 @@ ul {
 
 a {
   text-decoration: none;
-  color: #333;
+  color: var(--text-color);
 }
 
 li {
   font-size: 25px;
   padding: 1em;
   margin: 5px 0;
-  background-color: #EEE;
+  background-color: var(--item-bg);
   border-radius: 8px;
   transition: background-color 0.2s;
   display: flex;
   align-items: center;
   gap: 12px;
+  color: var(--text-color);
 }
 
 li:hover {
-  background-color: #E0E0E0;
+  background-color: var(--hover-bg);
 }
 
 .file-icon {
-  color: #666;
+  color: var(--text-secondary);
   width: 24px;
   text-align: center;
 }
@@ -71,17 +101,17 @@ li:hover {
 
 .filename {
   flex: 1;
-  color: #000;
+  color: var(--text-color);
   font-weight: 500;
 }
 
 .filesize {
   font-size: 0.8em;
-  color: #666;
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 
 .filepath {
-  color: #666;
+  color: var(--text-secondary);
   font-weight: normal;
 } 
