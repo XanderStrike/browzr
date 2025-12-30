@@ -116,6 +116,18 @@ li:hover {
   font-weight: normal;
 }
 
+.footer {
+  margin: 60px;
+  padding-top: 30px;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  font-size: 18px;
+}
+
+.footer a {
+  color: var(--text-secondary);
+}
+
 /* Mobile styles */
 @media (max-width: 768px) {
   .search {
