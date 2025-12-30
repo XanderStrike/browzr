@@ -114,4 +114,45 @@ li:hover {
 .filepath {
   color: var(--text-secondary);
   font-weight: normal;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .search {
+    font-size: 18px;
+    margin: 10px 0;
+    padding: 8px;
+  }
+
+  .status {
+    font-size: 14px;
+  }
+
+  li {
+    font-size: 16px;
+    padding: 0.75em;
+    gap: 8px;
+  }
+
+  .file-icon {
+    width: 18px;
+    font-size: 14px;
+  }
+
+  .filename {
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .filepath {
+    font-size: 12px;
+    display: block;
+    margin-bottom: 2px;
+    opacity: 0.7;
+  }
+
+  .filesize {
+    font-size: 12px;
+  }
 } 
